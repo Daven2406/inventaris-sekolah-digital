@@ -10,6 +10,7 @@ import KategoriList from "./components/KategoriList";
 import UserManagement from "./components/UserManagement";
 import { ShieldCheck, ClipboardList, Package } from "lucide-react";
 import { motion } from "motion/react";
+import logo from "./assets/logo.png";
 
 const AppContent = () => {
   const { user, loading, login } = useAuth();
@@ -42,16 +43,19 @@ const AppContent = () => {
           </div>
           
           <div className="relative z-10 flex items-center gap-4">
-            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center overflow-hidden">
+            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center overflow-hidden shadow-inner">
               <img 
-                src="/logo.png" 
+                src={logo} 
                 alt="Logo" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain p-1.5"
                 onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = "https://api.dicebear.com/7.x/initials/svg?seed=ISD&backgroundColor=1a1a1a";
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
                 }}
               />
+              <div className="hidden w-full h-full items-center justify-center bg-white text-[#1A1A1A] font-black text-xl">
+                ISD
+              </div>
             </div>
             <h1 className="text-2xl font-bold text-white tracking-tight">Inventaris Sekolah Digital</h1>
           </div>
@@ -100,16 +104,19 @@ const AppContent = () => {
             className="w-full max-w-sm space-y-8"
           >
             <div className="text-center">
-              <div className="lg:hidden w-16 h-16 bg-[#1A1A1A] rounded-2xl flex items-center justify-center overflow-hidden mx-auto mb-6">
+              <div className="lg:hidden w-16 h-16 bg-[#1A1A1A] rounded-2xl flex items-center justify-center overflow-hidden mx-auto mb-6 shadow-xl border border-white/10">
                 <img 
-                  src="/logo.png" 
+                  src={logo} 
                   alt="Logo" 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain p-2"
                   onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = "https://api.dicebear.com/7.x/initials/svg?seed=ISD&backgroundColor=ffffff&textColor=1a1a1a";
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
                   }}
                 />
+                <div className="hidden w-full h-full items-center justify-center bg-[#1A1A1A] text-white font-black text-2xl">
+                  ISD
+                </div>
               </div>
               <h3 className="text-3xl font-bold tracking-tight">Selamat Datang</h3>
               <p className="text-gray-500 mt-2 font-medium">Silakan login untuk mengelola inventaris sekolah.</p>

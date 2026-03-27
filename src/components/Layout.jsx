@@ -12,6 +12,7 @@ import {
   Tags
 } from "lucide-react";
 import { useAuth } from "./AuthContext";
+import logo from "../assets/logo.png";
 
 const Layout = ({ children, activeTab, onTabChange }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -71,16 +72,19 @@ const Layout = ({ children, activeTab, onTabChange }) => {
                 exit={{ opacity: 0, x: -20 }}
                 className="flex items-center gap-3"
               >
-                <div className="w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center overflow-hidden">
+                <div className="w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center overflow-hidden shadow-lg border border-white/5">
                   <img 
-                    src="/logo.png" 
+                    src={logo} 
                     alt="Logo" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain p-1.5"
                     onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "https://api.dicebear.com/7.x/initials/svg?seed=ISD&backgroundColor=ffffff&textColor=1a1a1a";
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
                     }}
                   />
+                  <div className="hidden w-full h-full items-center justify-center bg-[#1A1A1A] text-white font-black text-xs">
+                    ISD
+                  </div>
                 </div>
                 <span className="font-bold text-lg tracking-tight">Inventaris</span>
               </motion.div>
@@ -90,17 +94,20 @@ const Layout = ({ children, activeTab, onTabChange }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center overflow-hidden mx-auto"
+                className="w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center overflow-hidden mx-auto shadow-lg border border-white/5"
               >
                 <img 
-                  src="/logo.png" 
+                  src={logo} 
                   alt="Logo" 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain p-1.5"
                   onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = "https://api.dicebear.com/7.x/initials/svg?seed=ISD&backgroundColor=ffffff&textColor=1a1a1a";
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
                   }}
                 />
+                <div className="hidden w-full h-full items-center justify-center bg-[#1A1A1A] text-white font-black text-xs">
+                  ISD
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
