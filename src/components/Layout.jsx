@@ -12,7 +12,6 @@ import {
   Tags
 } from "lucide-react";
 import { useAuth } from "./AuthContext";
-import logo from "../assets/logo.png";
 
 const Layout = ({ children, activeTab, onTabChange }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -73,7 +72,15 @@ const Layout = ({ children, activeTab, onTabChange }) => {
                 className="flex items-center gap-3"
               >
                 <div className="w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center overflow-hidden">
-                  <img src={logo} alt="Logo" className="w-full h-full object-cover" />
+                  <img 
+                    src="/logo.png" 
+                    alt="Logo" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://api.dicebear.com/7.x/initials/svg?seed=ISD&backgroundColor=ffffff&textColor=1a1a1a";
+                    }}
+                  />
                 </div>
                 <span className="font-bold text-lg tracking-tight">Inventaris</span>
               </motion.div>
@@ -85,7 +92,15 @@ const Layout = ({ children, activeTab, onTabChange }) => {
                 exit={{ opacity: 0 }}
                 className="w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center overflow-hidden mx-auto"
               >
-                <img src={logo} alt="Logo" className="w-full h-full object-cover" />
+                <img 
+                  src="/logo.png" 
+                  alt="Logo" 
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "https://api.dicebear.com/7.x/initials/svg?seed=ISD&backgroundColor=ffffff&textColor=1a1a1a";
+                  }}
+                />
               </motion.div>
             )}
           </AnimatePresence>
