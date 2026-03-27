@@ -72,8 +72,8 @@ const Layout = ({ children, activeTab, onTabChange }) => {
                 exit={{ opacity: 0, x: -20 }}
                 className="flex items-center gap-3"
               >
-                <div className="w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center text-white">
-                  <School size={24} />
+                <div className="w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center overflow-hidden">
+                  <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
                 </div>
                 <span className="font-bold text-lg tracking-tight">Inventaris</span>
               </motion.div>
@@ -83,9 +83,9 @@ const Layout = ({ children, activeTab, onTabChange }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center text-white mx-auto"
+                className="w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center overflow-hidden mx-auto"
               >
-                <School size={20} />
+                <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
               </motion.div>
             )}
           </AnimatePresence>

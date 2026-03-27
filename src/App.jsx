@@ -42,8 +42,8 @@ const AppContent = () => {
           </div>
           
           <div className="relative z-10 flex items-center gap-4">
-            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-[#1A1A1A]">
-              <School size={28} />
+            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center overflow-hidden">
+              <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
             </div>
             <h1 className="text-2xl font-bold text-white tracking-tight">Inventaris Sekolah Digital</h1>
           </div>
@@ -92,8 +92,8 @@ const AppContent = () => {
             className="w-full max-w-sm space-y-8"
           >
             <div className="text-center">
-              <div className="lg:hidden w-16 h-16 bg-[#1A1A1A] rounded-2xl flex items-center justify-center text-white mx-auto mb-6">
-                <School size={32} />
+              <div className="lg:hidden w-16 h-16 bg-[#1A1A1A] rounded-2xl flex items-center justify-center overflow-hidden mx-auto mb-6">
+                <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
               </div>
               <h3 className="text-3xl font-bold tracking-tight">Selamat Datang</h3>
               <p className="text-gray-500 mt-2 font-medium">Silakan login untuk mengelola inventaris sekolah.</p>
