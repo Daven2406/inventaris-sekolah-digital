@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { collection, query, onSnapshot, where } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import { 
   BarChart, 
@@ -9,16 +9,13 @@ import {
   CartesianGrid, 
   Tooltip, 
   ResponsiveContainer, 
-  Cell,
-  PieChart,
-  Pie
+  Cell
 } from "recharts";
 import { 
   Package, 
   ClipboardList, 
   AlertTriangle, 
   CheckCircle2,
-  TrendingUp,
   ArrowUpRight,
   ArrowDownRight
 } from "lucide-react";
@@ -147,7 +144,7 @@ const Dashboard = () => {
           <h3 className="text-lg font-bold mb-6">Peminjaman Terbaru</h3>
           <div className="space-y-6">
             {recentPeminjaman.length > 0 ? (
-              recentPeminjaman.map((p, idx) => (
+              recentPeminjaman.map((p) => (
                 <div key={p.id} className="flex items-start gap-4">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
                     p.status === "dipinjam" ? "bg-orange-100 text-orange-600" : "bg-green-100 text-green-600"

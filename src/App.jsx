@@ -8,7 +8,7 @@ import PeminjamanList from "./components/PeminjamanList";
 import PeminjamanForm from "./components/PeminjamanForm";
 import KategoriList from "./components/KategoriList";
 import UserManagement from "./components/UserManagement";
-import { School, ShieldCheck, ClipboardList, Package } from "lucide-react";
+import { ShieldCheck, ClipboardList, Package } from "lucide-react";
 import { motion } from "motion/react";
 
 const AppContent = () => {

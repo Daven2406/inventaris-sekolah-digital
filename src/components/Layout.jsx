@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   LayoutDashboard, 
@@ -9,8 +9,7 @@ import {
   Menu, 
   X, 
   ChevronRight,
-  Tags,
-  School
+  Tags
 } from "lucide-react";
 import { useAuth } from "./AuthContext";
 

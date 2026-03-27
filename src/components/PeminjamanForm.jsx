@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { collection, addDoc, updateDoc, doc, serverTimestamp, query, onSnapshot, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { X, Save, ClipboardList, User, Package, AlertCircle } from "lucide-react";
