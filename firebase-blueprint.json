@@ -1,0 +1,75 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "petugas"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "email", "role", "createdAt"]
+    },
+    "Kategori": {
+      "title": "Kategori",
+      "description": "Kategori barang inventaris",
+      "type": "object",
+      "properties": {
+        "nama": { "type": "string" },
+        "deskripsi": { "type": "string" }
+      },
+      "required": ["nama"]
+    },
+    "Barang": {
+      "title": "Barang",
+      "description": "Data barang inventaris",
+      "type": "object",
+      "properties": {
+        "kode": { "type": "string" },
+        "nama": { "type": "string" },
+        "kategoriId": { "type": "string" },
+        "jumlah": { "type": "integer" },
+        "kondisi": { "type": "string", "enum": ["baik", "rusak", "perlu-perbaikan"] },
+        "lokasi": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["kode", "nama", "kategoriId", "jumlah", "kondisi", "lokasi", "createdAt"]
+    },
+    "Peminjaman": {
+      "title": "Peminjaman",
+      "description": "Data transaksi peminjaman barang",
+      "type": "object",
+      "properties": {
+        "barangId": { "type": "string" },
+        "namaPeminjam": { "type": "string" },
+        "jumlah": { "type": "integer" },
+        "tanggalPinjam": { "type": "string", "format": "date-time" },
+        "tanggalKembali": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["dipinjam", "dikembalikan"] },
+        "petugasId": { "type": "string" }
+      },
+      "required": ["barangId", "namaPeminjam", "jumlah", "tanggalPinjam", "status", "petugasId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User documents"
+    },
+    "/kategori/{kategoriId}": {
+      "schema": "Kategori",
+      "description": "Kategori documents"
+    },
+    "/barang/{barangId}": {
+      "schema": "Barang",
+      "description": "Barang documents"
+    },
+    "/peminjaman/{peminjamanId}": {
+      "schema": "Peminjaman",
+      "description": "Peminjaman documents"
+    }
+  }
+}

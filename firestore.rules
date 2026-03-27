@@ -1,0 +1,157 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users
+    // Fields:
+    //   - uid: string (required)
+    //   - name: string (required)
+    //   - email: string (required)
+    //   - role: string (required, ['admin', 'petugas'])
+    //   - createdAt: timestamp (required)
+    //
+    // Collection: kategori
+    // Fields:
+    //   - nama: string (required)
+    //   - deskripsi: string (optional)
+    //
+    // Collection: barang
+    // Fields:
+    //   - kode: string (required)
+    //   - nama: string (required)
+    //   - kategoriId: string (required)
+    //   - jumlah: number (required)
+    //   - kondisi: string (required, ['baik', 'rusak', 'perlu-perbaikan'])
+    //   - lokasi: string (required)
+    //   - createdAt: timestamp (required)
+    //
+    // Collection: peminjaman
+    // Fields:
+    //   - barangId: string (required)
+    //   - namaPeminjam: string (required)
+    //   - jumlah: number (required)
+    //   - tanggalPinjam: timestamp (required)
+    //   - tanggalKembali: timestamp (optional)
+    //   - status: string (required, ['dipinjam', 'dikembalikan'])
+    //   - petugasId: string (required)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "dd24darnell@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isPetugas() {
+      return isAuthenticated() && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'petugas' || isAdmin());
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    function isValidUser(data) {
+      return hasRequiredFields(['uid', 'name', 'email', 'role', 'createdAt']) &&
+             hasOnlyAllowedFields(['uid', 'name', 'email', 'role', 'createdAt']) &&
+             data.uid is string && data.uid.size() > 0 &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             isValidEmail(data.email) &&
+             data.role in ['admin', 'petugas'] &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidKategori(data) {
+      return hasRequiredFields(['nama']) &&
+             hasOnlyAllowedFields(['nama', 'deskripsi']) &&
+             data.nama is string && data.nama.size() > 0 && data.nama.size() < 100 &&
+             (!('deskripsi' in data) || (data.deskripsi is string && data.deskripsi.size() < 500));
+    }
+
+    function isValidBarang(data) {
+      return hasRequiredFields(['kode', 'nama', 'kategoriId', 'jumlah', 'kondisi', 'lokasi', 'createdAt']) &&
+             hasOnlyAllowedFields(['kode', 'nama', 'kategoriId', 'jumlah', 'kondisi', 'lokasi', 'createdAt']) &&
+             data.kode is string && data.kode.size() > 0 && data.kode.size() < 50 &&
+             data.nama is string && data.nama.size() > 0 && data.nama.size() < 200 &&
+             data.kategoriId is string &&
+             data.jumlah is number && data.jumlah >= 0 &&
+             data.kondisi in ['baik', 'rusak', 'perlu-perbaikan'] &&
+             data.lokasi is string && data.lokasi.size() > 0 && data.lokasi.size() < 200 &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidPeminjaman(data) {
+      return hasRequiredFields(['barangId', 'namaPeminjam', 'jumlah', 'tanggalPinjam', 'status', 'petugasId']) &&
+             hasOnlyAllowedFields(['barangId', 'namaPeminjam', 'jumlah', 'tanggalPinjam', 'tanggalKembali', 'status', 'petugasId']) &&
+             data.barangId is string &&
+             data.namaPeminjam is string && data.namaPeminjam.size() > 0 && data.namaPeminjam.size() < 100 &&
+             data.jumlah is number && data.jumlah > 0 &&
+             data.tanggalPinjam is timestamp &&
+             (!('tanggalKembali' in data) || data.tanggalKembali is timestamp) &&
+             data.status in ['dipinjam', 'dikembalikan'] &&
+             data.petugasId is string;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && isValidUser(request.resource.data) && 
+                      (isOwner(userId) && request.resource.data.role == 'petugas' || isAdmin());
+      allow update: if isAuthenticated() && isValidUser(request.resource.data) && 
+                      (isAdmin() || (isOwner(userId) && request.resource.data.role == resource.data.role));
+      allow delete: if isAdmin();
+    }
+
+    match /kategori/{kategoriId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    match /barang/{barangId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isPetugas() && isValidBarang(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /peminjaman/{peminjamanId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isPetugas() && isValidPeminjaman(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /test/connection {
+      allow read: if true;
+    }
+  }
+}
