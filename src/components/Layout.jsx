@@ -12,7 +12,6 @@ import {
   Tags
 } from "lucide-react";
 import { useAuth } from "./AuthContext";
-import logo from "../assets/logo.png";
 
 const Layout = ({ children, activeTab, onTabChange }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -74,16 +73,17 @@ const Layout = ({ children, activeTab, onTabChange }) => {
               >
                 <div className="w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center overflow-hidden shadow-lg border border-white/5">
                   <img 
-                    src={logo} 
+                    src="/logo.png" 
                     alt="Logo" 
                     className="w-full h-full object-contain p-1.5"
+                    style={{ display: 'block' }}
                     onError={(e) => {
                       e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
+                      if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
                     }}
                   />
-                  <div className="hidden w-full h-full items-center justify-center bg-[#1A1A1A] text-white font-black text-xs">
-                    ISD
+                  <div className="hidden w-full h-full items-center justify-center bg-[#1A1A1A]">
+                    <Package className="text-white" size={20} />
                   </div>
                 </div>
                 <span className="font-bold text-lg tracking-tight">Inventaris</span>
@@ -97,16 +97,17 @@ const Layout = ({ children, activeTab, onTabChange }) => {
                 className="w-10 h-10 bg-[#1A1A1A] rounded-xl flex items-center justify-center overflow-hidden mx-auto shadow-lg border border-white/5"
               >
                 <img 
-                  src={logo} 
+                  src="/logo.png" 
                   alt="Logo" 
                   className="w-full h-full object-contain p-1.5"
+                  style={{ display: 'block' }}
                   onError={(e) => {
                     e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'flex';
+                    if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
                   }}
                 />
-                <div className="hidden w-full h-full items-center justify-center bg-[#1A1A1A] text-white font-black text-xs">
-                  ISD
+                <div className="hidden w-full h-full items-center justify-center bg-[#1A1A1A]">
+                  <Package className="text-white" size={20} />
                 </div>
               </motion.div>
             )}

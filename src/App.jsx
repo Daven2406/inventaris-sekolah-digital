@@ -10,7 +10,6 @@ import KategoriList from "./components/KategoriList";
 import UserManagement from "./components/UserManagement";
 import { ShieldCheck, ClipboardList, Package } from "lucide-react";
 import { motion } from "motion/react";
-import logo from "./assets/logo.png";
 
 const AppContent = () => {
   const { user, loading, login } = useAuth();
@@ -43,18 +42,19 @@ const AppContent = () => {
           </div>
           
           <div className="relative z-10 flex items-center gap-4">
-            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center overflow-hidden shadow-inner">
+            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center overflow-hidden shadow-inner border border-gray-100">
               <img 
-                src={logo} 
+                src="/logo.png" 
                 alt="Logo" 
                 className="w-full h-full object-contain p-1.5"
+                style={{ display: 'block' }}
                 onError={(e) => {
                   e.target.style.display = 'none';
-                  e.target.nextSibling.style.display = 'flex';
+                  if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
                 }}
               />
-              <div className="hidden w-full h-full items-center justify-center bg-white text-[#1A1A1A] font-black text-xl">
-                ISD
+              <div className="hidden w-full h-full items-center justify-center bg-white">
+                <Package className="text-[#1A1A1A]" size={24} />
               </div>
             </div>
             <h1 className="text-2xl font-bold text-white tracking-tight">Inventaris Sekolah Digital</h1>
@@ -106,16 +106,17 @@ const AppContent = () => {
             <div className="text-center">
               <div className="lg:hidden w-16 h-16 bg-[#1A1A1A] rounded-2xl flex items-center justify-center overflow-hidden mx-auto mb-6 shadow-xl border border-white/10">
                 <img 
-                  src={logo} 
+                  src="/logo.png" 
                   alt="Logo" 
                   className="w-full h-full object-contain p-2"
+                  style={{ display: 'block' }}
                   onError={(e) => {
                     e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'flex';
+                    if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
                   }}
                 />
-                <div className="hidden w-full h-full items-center justify-center bg-[#1A1A1A] text-white font-black text-2xl">
-                  ISD
+                <div className="hidden w-full h-full items-center justify-center bg-[#1A1A1A]">
+                  <Package className="text-white" size={32} />
                 </div>
               </div>
               <h3 className="text-3xl font-bold tracking-tight">Selamat Datang</h3>
