@@ -48,18 +48,55 @@ const Dashboard = ({ onSeeAllActivity }) => {
   const barangRusak = barang.filter(b => b.kondisi === "rusak").length;
   const barangDipinjam = peminjaman.filter(p => p.status === "dipinjam").reduce((acc, curr) => acc + curr.jumlah, 0);
   const barangBaik = barang.filter(b => b.kondisi === "baik").length;
+  const barangPerluPerbaikan = barang.filter(b => b.kondisi === "perlu-perbaikan").length;
 
   const stats = [
-    { label: "Total Barang", value: totalBarang, icon: Package, color: "bg-blue-500" },
-    { label: "Barang Dipinjam", value: barangDipinjam, icon: ClipboardList, color: "bg-orange-500" },
-    { label: "Barang Rusak", value: barangRusak, icon: AlertTriangle, color: "bg-red-500" },
-    { label: "Kondisi Baik", value: barangBaik, icon: CheckCircle2, color: "bg-green-500" },
+    { 
+      label: "Total Barang", 
+      value: totalBarang, 
+      icon: Package, 
+      color: "text-blue-600", 
+      bgColor: "bg-blue-50", 
+      borderColor: "border-blue-100" 
+    },
+    { 
+      label: "Barang Dipinjam", 
+      value: barangDipinjam, 
+      icon: ClipboardList, 
+      color: "text-orange-600", 
+      bgColor: "bg-orange-50", 
+      borderColor: "border-orange-100" 
+    },
+    { 
+      label: "Kondisi Baik", 
+      value: barangBaik, 
+      icon: CheckCircle2, 
+      color: "text-green-600", 
+      bgColor: "bg-green-50", 
+      borderColor: "border-green-100" 
+    },
+    { 
+      label: "Perlu Perbaikan", 
+      value: barangPerluPerbaikan, 
+      icon: AlertTriangle, 
+      color: "text-amber-600", 
+      bgColor: "bg-amber-50", 
+      borderColor: "border-amber-100" 
+    },
+    { 
+      label: "Barang Rusak", 
+      value: barangRusak, 
+      icon: AlertTriangle, 
+      color: "text-red-600", 
+      bgColor: "bg-red-50", 
+      borderColor: "border-red-100" 
+    },
   ];
 
   const chartData = [
     { name: "Baik", value: barangBaik, color: "#10B981" },
+    { name: "Perlu Perbaikan", value: barangPerluPerbaikan, color: "#F59E0B" },
     { name: "Rusak", value: barangRusak, color: "#EF4444" },
-    { name: "Perlu Perbaikan", value: barang.filter(b => b.kondisi === "perlu-perbaikan").length, color: "#F59E0B" },
   ];
 
   const recentPeminjaman = [...peminjaman]
@@ -68,30 +105,30 @@ const Dashboard = ({ onSeeAllActivity }) => {
       const timeB = b.tanggalPinjam?.toMillis() || 0;
       return timeB - timeA;
     })
-    .slice(0, 5);
+    .slice(0, 8);
 
   if (loading) return <div className="flex items-center justify-center h-64">Loading Dashboard...</div>;
 
   return (
     <div className="space-y-8">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {stats.map((stat, index) => (
           <motion.div
             key={stat.label}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="bg-white p-6 rounded-2xl border border-[#E5E5E5] shadow-sm hover:shadow-md transition-shadow"
+            className={`${stat.bgColor} ${stat.borderColor} p-5 rounded-2xl border shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between`}
           >
-            <div className="flex items-start justify-between">
-              <div className={`p-3 rounded-xl ${stat.color} text-white`}>
-                <stat.icon size={24} />
+            <div className="flex items-center justify-between mb-4">
+              <div className={`p-2.5 rounded-xl bg-white shadow-sm ${stat.color}`}>
+                <stat.icon size={20} />
               </div>
             </div>
-            <div className="mt-4">
-              <p className="text-sm text-gray-500 font-medium">{stat.label}</p>
-              <h3 className="text-3xl font-bold mt-1">{stat.value}</h3>
+            <div>
+              <p className="text-xs text-gray-600 font-semibold uppercase tracking-wider">{stat.label}</p>
+              <h3 className="text-2xl font-bold mt-1 text-gray-900">{stat.value}</h3>
             </div>
           </motion.div>
         ))}
@@ -119,8 +156,8 @@ const Dashboard = ({ onSeeAllActivity }) => {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F1F1" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#9CA3AF' }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#9CA3AF' }} />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 13, fontWeight: 600, fill: '#4B5563' }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 13, fontWeight: 600, fill: '#4B5563' }} />
                 <Tooltip 
                   cursor={{ fill: '#F9FAFB' }}
                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
@@ -156,7 +193,7 @@ const Dashboard = ({ onSeeAllActivity }) => {
                     {p.status === "dipinjam" ? <ArrowUpRight size={18} /> : <ArrowDownRight size={18} />}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold truncate">{p.namaPeminjam}</p>
+                    <p className="text-sm font-bold">{p.namaPeminjam}</p>
                     <p className="text-xs text-gray-500">Meminjam {p.jumlah} barang</p>
                   </div>
                   <div className="text-right">

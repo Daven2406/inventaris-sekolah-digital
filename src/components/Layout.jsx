@@ -140,43 +140,34 @@ const Layout = ({ children, activeTab, onTabChange }) => {
 
         <nav className="flex-1 px-4 space-y-2 mt-4 overflow-y-auto">
           {filteredMenuItems.map((item) => (
-            <div key={item.id} className="relative group">
-              <button
-                onClick={() => handleTabChange(item.id)}
-                className={`w-full flex items-center gap-4 p-3 rounded-xl transition-all duration-200 ${
-                  activeTab === item.id 
-                    ? "bg-[#1A1A1A] text-white shadow-lg shadow-black/10" 
-                    : "text-gray-500 hover:bg-gray-100 hover:text-[#1A1A1A]"
-                }`}
-              >
-                <item.icon size={22} className="shrink-0" />
-                {(isSidebarOpen || (typeof window !== 'undefined' && window.innerWidth < 1024)) && (
-                  <span className="font-medium">{item.label}</span>
-                )}
-              </button>
-              
-              {/* Tooltip for minimized sidebar */}
-              {!isSidebarOpen && (
-                <div className="absolute left-full ml-4 px-3 py-2 bg-[#1A1A1A] text-white text-xs font-bold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-xl pointer-events-none">
-                  {item.label}
-                  <div className="absolute right-full top-1/2 -translate-y-1/2 border-8 border-transparent border-r-[#1A1A1A]" />
-                </div>
+            <button
+              key={item.id}
+              onClick={() => handleTabChange(item.id)}
+              className={`w-full flex items-center gap-4 p-3 rounded-xl transition-all duration-200 ${
+                activeTab === item.id 
+                  ? "bg-[#1A1A1A] text-white shadow-lg shadow-black/10" 
+                  : "text-gray-600 hover:bg-gray-100 hover:text-[#1A1A1A]"
+              }`}
+            >
+              <item.icon size={22} className="shrink-0" />
+              {(isSidebarOpen || (typeof window !== 'undefined' && window.innerWidth < 1024)) && (
+                <span className="font-medium">{item.label}</span>
               )}
-            </div>
+            </button>
           ))}
         </nav>
 
         <div className="p-4 border-t border-[#E5E5E5]">
-          <div className={`flex items-center gap-3 p-3 ${isSidebarOpen ? "" : "lg:justify-center"}`}>
+          <div className={`flex items-center gap-4 p-3 ${isSidebarOpen ? "" : "lg:justify-center"}`}>
             {(isSidebarOpen || (typeof window !== 'undefined' && window.innerWidth < 1024)) && (
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold truncate">{profile?.name}</p>
-                <p className="text-xs text-gray-500 capitalize">{profile?.role}</p>
+                <p className="text-sm font-bold truncate text-gray-900">{profile?.name}</p>
+                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">{profile?.role}</p>
               </div>
             )}
             <button
               onClick={logout}
-              className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+              className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-colors ml-auto"
               title="Logout"
             >
               <LogOut size={20} />
