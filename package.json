@@ -1,5 +1,6 @@
 {
-  "name": "react-example",
+  "name": "inventaris-sekolah-digital",
+  "description": "Aplikasi manajemen sarana dan prasarana sekolah berbasis digital.",
   "private": true,
   "version": "0.0.0",
   "type": "module",

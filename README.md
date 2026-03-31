@@ -1,20 +1,20 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Inventaris Sekolah Digital
 
-# Run and deploy your AI Studio app
+Aplikasi manajemen sarana dan prasarana sekolah yang dirancang untuk mempermudah inventarisasi aset secara digital. Platform ini membantu petugas sarpras dalam mencatat, memantau, dan mengelola seluruh barang milik sekolah dalam satu sistem terpusat.
 
-This contains everything you need to run your app locally.
+### Fitur Utama:
+- **Dashboard Statistik:** Visualisasi kondisi barang (baik/rusak) dan ringkasan aktivitas peminjaman terbaru.
+- **Manajemen Barang:** Pencatatan aset lengkap dengan kategori, lokasi, dan status kondisi.
+- **Sistem Peminjaman:** Alur peminjaman dan pengembalian barang yang terintegrasi dengan pembaruan stok otomatis.
+- **Riwayat Aktivitas:** Log lengkap setiap transaksi peminjaman untuk transparansi data.
+- **Multi-User Role:** Akses terkontrol untuk Admin (manajemen penuh) dan Petugas (operasional harian).
+- **Keamanan Google Auth:** Login aman menggunakan akun Google sekolah.
 
-View your app in AI Studio: https://ai.studio/apps/7279d587-e527-404d-9dce-ccea788a292d
+### Teknologi:
+- **Frontend:** React.js dengan Tailwind CSS untuk antarmuka yang modern dan responsif.
+- **Backend & Database:** Firebase Firestore untuk penyimpanan data real-time.
+- **Autentikasi:** Firebase Authentication (Google Sign-In).
+- **Animasi:** Motion (Framer Motion) untuk pengalaman pengguna yang lebih halus.
 
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+© 2026 Inventaris Sekolah Digital • SMK RPL Project
