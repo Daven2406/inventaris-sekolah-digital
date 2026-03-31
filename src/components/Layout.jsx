@@ -22,6 +22,7 @@ const Layout = ({ children, activeTab, onTabChange }) => {
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, roles: ["admin", "petugas"] },
     { id: "barang", label: "Data Barang", icon: Package, roles: ["admin", "petugas"] },
     { id: "peminjaman", label: "Peminjaman", icon: ClipboardList, roles: ["admin", "petugas"] },
+    { id: "aktivitas", label: "Aktivitas", icon: ClipboardList, roles: ["admin", "petugas"] },
     { id: "kategori", label: "Kategori", icon: Tags, roles: ["admin"] },
     { id: "users", label: "Manajemen User", icon: Users, roles: ["admin"] },
   ];
@@ -139,20 +140,29 @@ const Layout = ({ children, activeTab, onTabChange }) => {
 
         <nav className="flex-1 px-4 space-y-2 mt-4 overflow-y-auto">
           {filteredMenuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleTabChange(item.id)}
-              className={`w-full flex items-center gap-4 p-3 rounded-xl transition-all duration-200 ${
-                activeTab === item.id 
-                  ? "bg-[#1A1A1A] text-white shadow-lg shadow-black/10" 
-                  : "text-gray-500 hover:bg-gray-100 hover:text-[#1A1A1A]"
-              }`}
-            >
-              <item.icon size={22} className="shrink-0" />
-              {(isSidebarOpen || (typeof window !== 'undefined' && window.innerWidth < 1024)) && (
-                <span className="font-medium">{item.label}</span>
+            <div key={item.id} className="relative group">
+              <button
+                onClick={() => handleTabChange(item.id)}
+                className={`w-full flex items-center gap-4 p-3 rounded-xl transition-all duration-200 ${
+                  activeTab === item.id 
+                    ? "bg-[#1A1A1A] text-white shadow-lg shadow-black/10" 
+                    : "text-gray-500 hover:bg-gray-100 hover:text-[#1A1A1A]"
+                }`}
+              >
+                <item.icon size={22} className="shrink-0" />
+                {(isSidebarOpen || (typeof window !== 'undefined' && window.innerWidth < 1024)) && (
+                  <span className="font-medium">{item.label}</span>
+                )}
+              </button>
+              
+              {/* Tooltip for minimized sidebar */}
+              {!isSidebarOpen && (
+                <div className="absolute left-full ml-4 px-3 py-2 bg-[#1A1A1A] text-white text-xs font-bold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-xl pointer-events-none">
+                  {item.label}
+                  <div className="absolute right-full top-1/2 -translate-y-1/2 border-8 border-transparent border-r-[#1A1A1A]" />
+                </div>
               )}
-            </button>
+            </div>
           ))}
         </nav>
 

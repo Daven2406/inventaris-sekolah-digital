@@ -8,6 +8,7 @@ import PeminjamanList from "./components/PeminjamanList";
 import PeminjamanForm from "./components/PeminjamanForm";
 import KategoriList from "./components/KategoriList";
 import UserManagement from "./components/UserManagement";
+import AktivitasList from "./components/AktivitasList";
 import { ShieldCheck, ClipboardList, Package } from "lucide-react";
 import { motion } from "motion/react";
 
@@ -152,7 +153,7 @@ const AppContent = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "dashboard":
-        return <Dashboard />;
+        return <Dashboard onSeeAllActivity={() => setActiveTab("aktivitas")} />;
       case "barang":
         return (
           <BarangList 
@@ -168,6 +169,8 @@ const AppContent = () => {
         );
       case "peminjaman":
         return <PeminjamanList onAdd={() => setIsPeminjamanFormOpen(true)} />;
+      case "aktivitas":
+        return <AktivitasList />;
       case "kategori":
         return <KategoriList />;
       case "users":

@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 
-const Dashboard = () => {
+const Dashboard = ({ onSeeAllActivity }) => {
   const [barang, setBarang] = useState([]);
   const [peminjaman, setPeminjaman] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -145,7 +145,11 @@ const Dashboard = () => {
           <div className="space-y-6">
             {recentPeminjaman.length > 0 ? (
               recentPeminjaman.map((p) => (
-                <div key={p.id} className="flex items-start gap-4">
+                <div 
+                  key={p.id} 
+                  className="flex items-start gap-4 cursor-pointer hover:bg-gray-50 p-2 -m-2 rounded-xl transition-colors"
+                  onClick={onSeeAllActivity}
+                >
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
                     p.status === "dipinjam" ? "bg-orange-100 text-orange-600" : "bg-green-100 text-green-600"
                   }`}>
@@ -155,23 +159,26 @@ const Dashboard = () => {
                     <p className="text-sm font-bold truncate">{p.namaPeminjam}</p>
                     <p className="text-xs text-gray-500">Meminjam {p.jumlah} barang</p>
                   </div>
-                    <div className="text-right">
-                      <p className="text-[10px] text-gray-400 font-medium uppercase">
-                        {p.tanggalPinjam?.toDate().toLocaleDateString() || "Memproses..."}
-                      </p>
-                      <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
-                        p.status === "dipinjam" ? "bg-orange-100 text-orange-600" : "bg-green-100 text-green-600"
-                      }`}>
-                        {p.status}
-                      </span>
-                    </div>
+                  <div className="text-right">
+                    <p className="text-[10px] text-gray-400 font-medium uppercase">
+                      {p.tanggalPinjam?.toDate().toLocaleDateString() || "Memproses..."}
+                    </p>
+                    <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
+                      p.status === "dipinjam" ? "bg-orange-100 text-orange-600" : "bg-green-100 text-green-600"
+                    }`}>
+                      {p.status}
+                    </span>
+                  </div>
                 </div>
               ))
             ) : (
               <p className="text-sm text-gray-500 text-center py-8 italic">Belum ada aktivitas peminjaman.</p>
             )}
           </div>
-          <button className="w-full mt-8 py-3 text-sm font-bold text-[#1A1A1A] border border-[#E5E5E5] rounded-xl hover:bg-gray-50 transition-colors">
+          <button 
+            onClick={onSeeAllActivity}
+            className="w-full mt-8 py-3 text-sm font-bold text-[#1A1A1A] border border-[#E5E5E5] rounded-xl hover:bg-gray-50 transition-colors"
+          >
             Lihat Semua Aktivitas
           </button>
         </motion.div>
